@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PCT_Xamarin"
+             x:Class="PCT_Xamarin.MainPage">
+  
+  <StackLayout Spacing="20" Padding="2" BackgroundColor="White" >
+    
+    <Label Text="Project Contact App Alpha" 
+           TextColor="#242524"
+           FontSize="24"
+           FontAttributes="Bold"
+           HorizontalTextAlignment="Center"/>   
+
+    <Button Text="Login" TextColor="Black"
+           BackgroundColor="#71ccdd" 
+           
+           />
+    <Button Text="Sign Up" TextColor="Black"
+           BackgroundColor="#71ccdd" 
+           />
+    
+    
+  </StackLayout>
+
+</ContentPage>
