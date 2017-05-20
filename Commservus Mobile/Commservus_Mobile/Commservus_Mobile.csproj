@@ -56,7 +56,9 @@
       <DependentUpon>MePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MePageItem.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="Organization.cs" />
+    <Compile Include="organization\CreateOrganization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoundedBoxView.cs" />
     <Compile Include="general\SignupPage.xaml.cs">
@@ -113,7 +115,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">
-      <HintPath>..\..\..\PCT\Application\restsharp-105.2.3\lib\android\RestSharp.dll</HintPath>
+      <HintPath>..\..\..\..\PCT\Application\restsharp-105.2.3\lib\android\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SQLitePCLRaw.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SQLitePCLRaw.core.1.1.2\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
@@ -156,6 +158,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -8,30 +8,38 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 namespace Commservus_Mobile
 {
-    class Organization : ContentPage
+    class Event : ContentPage
     {
-        public Organization()
+        public Event()
         {
 
             Label nameLabel = new Label
             {
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 FontAttributes = FontAttributes.Bold,
-                Text = "Acton Boxborough School District",
+                Text = "Dodgeball Tournament",
                 HorizontalOptions = LayoutOptions.Center
             };
 
             Label usernameLabel = new Label
             {
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-                Text = "ABRSD",
+                Text = "Acton Boxborough Regional High School",
                 HorizontalOptions = LayoutOptions.Center
+            };
+
+            Label organizationLabel = new Label
+            {
+                FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
+                Text = "5:30PM - 6:30PM (EST) on May 18, 2017",
+                HorizontalOptions = LayoutOptions.Center,
+                FontAttributes = FontAttributes.Bold,
             };
 
             Label descriptionLabel = new Label
             {
                 FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
-                Text = "Acton-Boxborough Regional High School (ABRHS) is an open enrollment high school in Acton, Massachusetts. A part of the Acton-Boxborough Regional School District, it serves the Massachusetts towns of Acton and Boxborough and has students in grades 9 through 12.",
+                Text = "We are hosting a dodgeball tournament and need people to help organize it! We would love kids in grades 9-12",
                 HorizontalOptions = LayoutOptions.Center,
                 HorizontalTextAlignment = TextAlignment.Center
             };
@@ -43,12 +51,26 @@ namespace Commservus_Mobile
                 BackgroundColor = Color.FromHex("#3498DB"),
                 BorderRadius = 0,
                 TextColor = Color.White,
-                Text = "Join",
+                Text = "Apply to Event",
                 HeightRequest = 50,
             };
 
+            StackLayout headerLayout = new StackLayout
+            {
+                Padding = 10,
+
+                Children =
+                        {
+                            nameLabel,
+                            usernameLabel,
+                                                        organizationLabel,
+                            descriptionLabel,
+                            joinButton,
+                }
+            };
+
             ObservableCollection<Group> groupedItems = new ObservableCollection<Group>();
-            Group group2 = new Group("Events", "DS");
+            Group group2 = new Group("Similar Events", "DS");
             foreach (var item in api.APIHandler.myFeed.events)
             {
                 var iItem = new ItemCell() { BindingContext = new { FirstName = "John Doe", Mobile = "Xamarin" } };
@@ -84,18 +106,6 @@ namespace Commservus_Mobile
             };
 
 
-            StackLayout headerLayout = new StackLayout
-            {
-                Padding = 10,
-
-                Children =
-                        {
-                            nameLabel,
-                            usernameLabel,
-                            descriptionLabel,
-                            joinButton,
-                }
-            };
 
             StackLayout testLayout = new StackLayout
             {
@@ -103,7 +113,7 @@ namespace Commservus_Mobile
                 Children =
                         {
                     headerLayout,
-                            listview
+                    listview
                         }
             };
 
@@ -177,22 +187,26 @@ namespace Commservus_Mobile
             new api.APIHandler.Event
             {
                 NAME = "Community Service Awards Nights",
-                START_TIME = "5:30PM - 6:30PM (EST) on May 18, 2017"
+                START_TIME = "5:30PM - 6:30PM (EST) on May 18, 2017",
+                ORGANIZATION_NAME = "Danny's Place"
             },
             new api.APIHandler.Event
             {
                 NAME = "Food Pantry Visit",
-                START_TIME = "5:30PM - 6:30PM (EST) on May 18, 2017"
+                START_TIME = "5:30PM - 6:30PM (EST) on May 18, 2017",
+                ORGANIZATION_NAME = "Acton Boxborough Regional High School"
             },
             new api.APIHandler.Event
             {
                 NAME = "Big Huge Bake Sale",
-                START_TIME = "5:30PM - 6:30PM (EST) on May 18, 2017"
+                START_TIME = "5:30PM - 6:30PM (EST) on May 18, 2017",
+                                ORGANIZATION_NAME = "Frostbyte"
             },
             new api.APIHandler.Event
             {
-                NAME = "Dodgeball Tournament",
-                START_TIME = "5:30PM - 6:30PM (EST) on May 18, 2017"
+                NAME = "School Cleanup",
+                START_TIME = "5:30PM - 6:30PM (EST) on May 18, 2017",
+                                                ORGANIZATION_NAME = "Frostbyte"
             },
             new api.APIHandler.Event
             {
@@ -209,11 +223,11 @@ namespace Commservus_Mobile
         public static int number = 0;
         public static void change(ItemCell itemCell)
         {
-            itemCell.labelThird.IsVisible = false;
+            itemCell.labelThird.IsVisible = true;
 
             itemCell.labelName.BindingContext = new { Name = FAKE_STUFF[number].NAME };
             itemCell.labelDescription.BindingContext = new { Name = FAKE_STUFF[number].START_TIME };
-            itemCell.labelThird.BindingContext = "12 Members";
+            itemCell.labelThird.BindingContext = new { Name = FAKE_STUFF[number].ORGANIZATION_NAME };
             itemCell.type = 0;
             number++;
         }
@@ -301,7 +315,7 @@ namespace Commservus_Mobile
             {
                 base.OnAppearing();
 
-                Organization.change(this);
+                Event.change(this);
             }
 
             protected override void OnTapped()

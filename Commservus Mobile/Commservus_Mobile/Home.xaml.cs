@@ -33,7 +33,7 @@ namespace Commservus_Mobile
                         case "Cancel":
                             break;
                         case "Organization":
-                            await DisplayAlert("Boop", "Organization", "Beep");
+                            await Navigation.PushAsync(new Commservus_Mobile.organization.CreateOrganization());
                             break;
                         case "Event":
                             await DisplayAlert("Boop", "Event", "Beep");
@@ -66,16 +66,6 @@ namespace Commservus_Mobile
                 group2.Add(iItem);
             }
 
-            try
-            {
-                var testItem = new ItemCell();
-                testItem.labelName.Text = "Test abc";
-                group2.Add(testItem);
-            } catch (Exception ex)
-            {
-                group.Name = ex.Message;
-            }
-
             groupedItems.Add(group);
             groupedItems.Add(group2);
 
@@ -90,18 +80,6 @@ namespace Commservus_Mobile
                 GroupHeaderTemplate = new DataTemplate(typeof(HeaderView)),
                 ItemsSource = groupedItems
             };
-
-            //layout = new StackLayout
-            //{
-            //    Children =
-            //    {
-            //    },
-
-            //    HorizontalOptions = LayoutOptions.CenterAndExpand,
-            //    Orientation = StackOrientation.Horizontal,
-            //    Spacing = 10,
-            //    Padding = 10
-            //};
 
             layout = new StackLayout()
             {
@@ -122,8 +100,11 @@ namespace Commservus_Mobile
         {
             if (org)
             {
+                itemCell.labelThird.IsVisible = false;
+
                 itemCell.labelName.BindingContext = new { Name = api.APIHandler.myFeed.organizations[number].NAME };
                 itemCell.labelDescription.BindingContext = new { Name = api.APIHandler.myFeed.organizations[number].USERNAME };
+                itemCell.labelThird.BindingContext = "12 Members";
                 itemCell.organization = api.APIHandler.myFeed.organizations[number];
                 itemCell.real = true;
                 itemCell.type = 0;
@@ -138,13 +119,13 @@ namespace Commservus_Mobile
             {
                 if (api.APIHandler.myFeed.events.Count <= number)
                 {
-                    itemCell.labelThird.IsVisible = false;
                     return;
                 }
 
-
+                itemCell.labelThird.IsVisible = true;
                 itemCell.labelName.BindingContext = new { Name = api.APIHandler.myFeed.events[number].NAME };
-                itemCell.labelDescription.BindingContext = new { Name = api.APIHandler.myFeed.events[number].ORGANIZATION_ID };
+                itemCell.labelDescription.BindingContext = new { Name = api.APIHandler.myFeed.events[number].ORGANIZATION_NAME };
+                itemCell.labelThird.BindingContext = new { Name = api.APIHandler.myFeed.events[number].START_TIME };
                 itemCell._event = api.APIHandler.myFeed.events[number];
                 itemCell.real = true;
                 itemCell.type = 1;
@@ -189,10 +170,16 @@ namespace Commservus_Mobile
             }
         }
 
-        public static void move()
+        public static void moveEvent()
+        {
+            navigation.PushAsync(new Commservus_Mobile.Event() { });
+        }
+
+        public static void moveOrg()
         {
             navigation.PushAsync(new Commservus_Mobile.Organization() { });
         }
+
 
         public class Client : INotifyPropertyChanged
         {
@@ -326,18 +313,14 @@ namespace Commservus_Mobile
 
             protected override void OnTapped()
             {
-                base.OnTapped();
-
                 if(real)
                 {
-                    move();
-
                     if (type == 0)
                     {
-                        labelName.BindingContext = new { Name = organization.DATE_CREATED };
-                    }else if(type == 1)
+                        moveOrg();
+                    } else if(type == 1)
                     {
-                        labelName.BindingContext = new { Name = _event.LOCATION };
+                        moveEvent();
                     }
                 }
             }
